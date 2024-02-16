@@ -7,6 +7,9 @@ const fileCache = localforage.createInstance({
   name: 'filecache'
 });
 
+// custom ESBuild plugin for grabbing packages
+// support for js and css.
+// also checks for already cached files.
 export const fetchPlugin = (input: string) => {
   return {
     name: 'fetch-plugin',
@@ -20,10 +23,9 @@ export const fetchPlugin = (input: string) => {
         };
       })
 
-
-      // load function to handle css files
-      build.onLoad({ filter: /.css$/ }, async (args: any) => {
-
+      // seperate onLoad that checks for files that are
+      // already cached in the browser.
+      build.onLoad({ filter: /.*/ }, async (args: any) => {
         // check to see if we have already fetched this file
         // and see if it is in the cache
         const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(args.path);
@@ -32,7 +34,10 @@ export const fetchPlugin = (input: string) => {
         if (cachedResult) {
           return cachedResult
         }
+      })
 
+      // load function to handle css files
+      build.onLoad({ filter: /.css$/ }, async (args: any) => {
         const { data, request, } = await axios.get(args.path)
 
         const escapedCssString = data
@@ -54,23 +59,12 @@ export const fetchPlugin = (input: string) => {
 
         // store response in cache
         await fileCache.setItem(args.path, result)
-
         return result;
       })
 
 
       build.onLoad({ filter: /.*/ }, async (args: any) => {
         // load function for javascript files
-
-        // check to see if we have already fetched this file
-        // and see if it is in the cache
-        const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(args.path);
-
-        // if it is, return it immediately
-        if (cachedResult) {
-          return cachedResult
-        }
-
         const { data, request, } = await axios.get(args.path)
 
         const result: esbuild.OnLoadResult = {
@@ -81,7 +75,6 @@ export const fetchPlugin = (input: string) => {
 
         // store response in cache
         await fileCache.setItem(args.path, result)
-
         return result;
       });
     }
