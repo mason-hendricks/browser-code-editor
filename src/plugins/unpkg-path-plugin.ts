@@ -1,6 +1,8 @@
 import * as esbuild from 'esbuild-wasm';
 
-// unpack plugins
+// custom ESBuild plugin for unpackaging packages
+// that were previously grabbed.
+
 export const unpkgPathPlugin = () => {
   return {
     name: 'unpkg-path-plugin',
