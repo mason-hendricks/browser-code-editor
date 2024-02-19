@@ -37,6 +37,7 @@ const CodeEditor: React.FC<EditorProps> = ({ initialValue, onChange }) => {
     });
 
     // set the formatted value back in the editor
+    editorRef.current.setValue(formatted);
   };
 
   return (
