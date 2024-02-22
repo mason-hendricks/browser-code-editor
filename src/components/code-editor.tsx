@@ -20,7 +20,6 @@ const CodeEditor: React.FC<EditorProps> = ({ initialValue, onChange }) => {
   const onEditorDidMount: EditorDidMount = (getValue, monacoEditor) => {
     editorRef.current = monacoEditor;
     monacoEditor.onDidChangeModelContent(() => {
-      console.log(getValue());
       onChange(getValue());
     });
 
@@ -38,8 +37,8 @@ const CodeEditor: React.FC<EditorProps> = ({ initialValue, onChange }) => {
 
     // for some reason this fixes the problem with
     // the editor automatically evaluating JS
-    // everytime a character is entered.
-    // console error spam is fixed.
+    // everytime a character is entered,
+    // thus removing console error spam.
 
     highlighter.highLightOnDidChangeModelContent(
       () => {},
