@@ -3,7 +3,9 @@ import { useRef } from 'react';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
 import './code-editor.css';
+import './syntax.css';
 import codeShift from 'jscodeshift';
+import Highlighter from 'monaco-jsx-highlighter';
 
 interface EditorProps {
   initialValue: string;
@@ -23,6 +25,28 @@ const CodeEditor: React.FC<EditorProps> = ({ initialValue, onChange }) => {
     });
 
     monacoEditor.getModel()?.updateOptions({ tabSize: 2 });
+
+    //setup js code shift and highlighter
+    // to fix jsx highlighting within monaco editor
+
+    const highlighter = new Highlighter(
+      // @ts-ignore
+      window.monaco,
+      codeShift,
+      monacoEditor
+    );
+
+    // for some reason this fixes the problem with
+    // the editor automatically evaluating JS
+    // everytime a character is entered.
+    // console error spam is fixed.
+
+    highlighter.highLightOnDidChangeModelContent(
+      () => {},
+      () => {},
+      undefined,
+      () => {}
+    );
   };
 
   const onFormatClick = () => {
