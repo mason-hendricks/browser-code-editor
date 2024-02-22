@@ -4,6 +4,9 @@ import { useState, useEffect, useRef } from 'react';
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlugin } from './plugins/fetch-plugin';
 import CodeEditor from './components/code-editor';
+import 'bulmaswatch/superhero/bulmaswatch.min.css';
+
+// reminder to install packages with npm install {packageName} --legacy-peer-deps to avoid errors
 
 const App = () => {
   const [input, setInput] = useState('');
