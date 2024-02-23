@@ -8,6 +8,7 @@ interface PreviewProps {
 const html = `
 <html>
   <head>
+    <style>html { background-color: white }</style>
     <body>
       <div id='root'></div>
         <script>
@@ -39,7 +40,7 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
     <div className='preview-wrapper'>
       <iframe
         ref={iframe}
-        title='iframe-editor'
+        title='preview'
         srcDoc={html}
         sandbox='allow-scripts'
       />
