@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CodeEditor from '../components/code-editor';
 import 'bulmaswatch/superhero/bulmaswatch.min.css';
 import Preview from '../components/preview';
@@ -9,21 +9,30 @@ import Resizeable from './resizable';
 const CodeCell = () => {
   const [input, setInput] = useState('');
   const [code, setCode] = useState('');
+  const [err, setErr] = useState<string | Error>('');
 
-  const onClick = async () => {
-    const result = await Bundler(input);
-    setCode(result);
-  };
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      const result = await Bundler(input);
+      setCode(result.code);
+      setErr(result.error);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [input]);
 
   return (
     <Resizeable direction='vertical'>
       <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
-        <CodeEditor
-          initialValue='const a = 1;'
-          onChange={(value) => setInput(value)}
-        />
-
-        <Preview code={code} />
+        <Resizeable direction='horizontal'>
+          <CodeEditor
+            initialValue='const a = 1;'
+            onChange={(value) => setInput(value)}
+          />
+        </Resizeable>
+        <Preview code={code} errorMsg={String(err)} />
       </div>
     </Resizeable>
   );
