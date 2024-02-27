@@ -25,7 +25,7 @@ const cellsReducer = produce(
       case ActionType.UPDATE_CELL:
         const { id, content } = action.payload;
         state.data[id].content = content;
-        return;
+        return state;
 
       case ActionType.DELETE_CELL:
         // delete state data with immer delete function
@@ -33,7 +33,7 @@ const cellsReducer = produce(
 
         // use array filtering to delete from ordering array
         state.order = state.order.filter((id) => id !== action.payload);
-        return;
+        return state;
 
       case ActionType.MOVE_CELL:
         // get direction and index
@@ -45,14 +45,14 @@ const cellsReducer = produce(
 
         // check for invalid array location
         if (targetIndex < 0 || targetIndex > state.order.length - 1) {
-          return;
+          return state;
         }
 
         // swap the cells
         state.order[index] = state.order[targetIndex];
         state.order[targetIndex] = action.payload.id;
 
-        return;
+        return state;
       case ActionType.INSERT_CELL_BEFORE:
         // create new cell
 
@@ -78,7 +78,7 @@ const cellsReducer = produce(
           state.order.splice(foundIndex, 0, cell.id);
         }
 
-        return;
+        return state;
       default:
         return state;
     }
