@@ -82,7 +82,8 @@ const cellsReducer = produce(
       default:
         return state;
     }
-  }
+  },
+  initialState
 );
 
 // function to create new cell ids
