@@ -5,6 +5,7 @@ import Preview from '../components/preview';
 import Bundler from '../bundler';
 import Resizeable from './resizable';
 import { Cell } from '../state';
+import { useActions } from '../hooks/use-actions';
 
 interface CodeCellProps {
   cell: Cell;
@@ -12,13 +13,13 @@ interface CodeCellProps {
 
 // reminder to install packages with npm install {packageName} --legacy-peer-deps to avoid errors
 const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
-  const [input, setInput] = useState('');
   const [code, setCode] = useState('');
   const [err, setErr] = useState<string | Error>('');
+  const { updateCell } = useActions();
 
   useEffect(() => {
     const timer = setTimeout(async () => {
-      const result = await Bundler(input);
+      const result = await Bundler(cell.content);
       setCode(result.code);
       setErr(result.error);
     }, 1000);
@@ -26,15 +27,15 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [input]);
+  }, [cell.content]);
 
   return (
     <Resizeable direction='vertical'>
       <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
         <Resizeable direction='horizontal'>
           <CodeEditor
-            initialValue='const a = 1;'
-            onChange={(value) => setInput(value)}
+            initialValue={cell.content}
+            onChange={(value) => updateCell(cell.id, value)}
           />
         </Resizeable>
         <Preview code={code} errorMsg={String(err)} />
