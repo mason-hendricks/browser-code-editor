@@ -4,8 +4,6 @@ import {
   DeleteCellAction,
   MoveCellAction,
   InsertCellAfterAction,
-  // BundleCompleteAction,
-  // BundleStartAction,
   CellDirection,
   Action,
 } from '../actions';
