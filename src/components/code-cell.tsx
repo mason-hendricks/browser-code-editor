@@ -6,6 +6,7 @@ import Resizeable from './resizable';
 import { Cell } from '../state';
 import { useActions } from '../hooks/use-actions';
 import { useTypedSelector } from '../hooks/use-typed-selector';
+import './code-cell.css';
 
 interface CodeCellProps {
   cell: Cell;
@@ -19,14 +20,22 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   const bundle = useTypedSelector((state) => state.bundles[cell.id]);
 
   useEffect(() => {
+    // initial action if no bundle is found
+    if (!bundle) {
+      createBundle(cell.id, cell.content);
+      return;
+    }
+
+    // call create bundle action creator
+    // wrapped in debounce function
     const timer = setTimeout(async () => {
-      // call create bundle action creator
       createBundle(cell.id, cell.content);
     }, 750);
 
     return () => {
       clearTimeout(timer);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cell.content, cell.id, createBundle]);
 
   return (
@@ -45,7 +54,17 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
           />
         </Resizeable>
 
-        {bundle && <Preview code={bundle.code} errorMsg={bundle.error} />}
+        <div className='progress-wrapper'>
+          {!bundle || bundle.loading ? (
+            <div className='progress-cover'>
+              <progress className='progress is-small is-primary' max='100'>
+                Loading
+              </progress>
+            </div>
+          ) : (
+            <Preview code={bundle.code} errorMsg={bundle.error} />
+          )}
+        </div>
       </div>
     </Resizeable>
   );
