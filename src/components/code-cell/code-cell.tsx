@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import { useCumulativeCode } from '../hooks/use-cumulative-code';
-import CodeEditor from '../components/code-editor';
+import { useCumulativeCode } from '../../hooks/use-cumulative-code';
+import CodeEditor from '../code-editor/code-editor';
 import 'bulmaswatch/superhero/bulmaswatch.min.css';
-import Preview from '../components/preview';
-import Resizeable from './resizable';
-import { Cell } from '../state';
-import { useActions } from '../hooks/use-actions';
-import { useTypedSelector } from '../hooks/use-typed-selector';
+import Preview from '../preview/preview';
+import Resizeable from '../resizeable/resizable';
+import { Cell } from '../../state';
+import { useActions } from '../../hooks/use-actions';
+import { useTypedSelector } from '../../hooks/use-typed-selector';
 import './code-cell.css';
 
 interface CodeCellProps {
