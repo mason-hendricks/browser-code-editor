@@ -19,6 +19,9 @@ const initialState: CellState = {
   data: {},
 };
 
+// REDUX REDUCER FUNCTION
+// controls what happens to each cell when one of these action types are called
+
 const cellsReducer = produce(
   (state: CellState = initialState, action: Action) => {
     switch (action.type) {
