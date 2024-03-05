@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import CodeEditor from '../components/code-editor';
 import 'bulmaswatch/superhero/bulmaswatch.min.css';
 import Preview from '../components/preview';
@@ -19,24 +19,45 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   // use typed selector to get bundles state
   const bundle = useTypedSelector((state) => state.bundles[cell.id]);
 
+  // method to handle running code from other code cells
+  const { data, order } = useTypedSelector((state) => state.cells);
+  const cumulativeCode = useCallback(() => {
+    // produce ordered array of all cells
+    const orderedCells = order.map((id) => data[id]);
+    const cumulativeCode = [];
+
+    // if cells in order are code cells,
+    // grab and push their contents
+    for (const c of orderedCells) {
+      if (c.type === 'CODE') {
+        cumulativeCode.push(c.content);
+      }
+
+      // break early if ids match current code
+      // cell of this component
+      if (c.id === cell.id) {
+        break;
+      }
+    }
+
+    return cumulativeCode;
+  }, [order, data, cell.id]);
+
   useEffect(() => {
-    // initial action if no bundle is found
     if (!bundle) {
-      createBundle(cell.id, cell.content);
+      createBundle(cell.id, cumulativeCode().join('\n'));
       return;
     }
 
-    // call create bundle action creator
-    // wrapped in debounce function
     const timer = setTimeout(async () => {
-      createBundle(cell.id, cell.content);
+      createBundle(cell.id, cumulativeCode().join('\n'));
     }, 750);
-
     return () => {
       clearTimeout(timer);
     };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cell.content, cell.id, createBundle]);
+  }, [cell.id, cumulativeCode().join('\n'), createBundle]);
 
   return (
     <Resizeable direction='vertical'>
