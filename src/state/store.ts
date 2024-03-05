@@ -20,3 +20,11 @@ store.dispatch({
     type: 'TEXT',
   },
 });
+
+store.dispatch({
+  type: ActionType.INSERT_CELL_AFTER,
+  payload: {
+    id: null,
+    type: 'CODE',
+  },
+});
