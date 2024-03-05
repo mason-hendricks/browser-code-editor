@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
 import './code-editor.css';
-import './syntax.css';
+import '../syntax.css';
 import codeShift from 'jscodeshift';
 import Highlighter from 'monaco-jsx-highlighter';
 

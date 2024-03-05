@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
-import CodeEditor from '../components/code-editor';
+import { useCumulativeCode } from '../../hooks/use-cumulative-code';
+import CodeEditor from '../code-editor/code-editor';
 import 'bulmaswatch/superhero/bulmaswatch.min.css';
-import Preview from '../components/preview';
-import Resizeable from './resizable';
-import { Cell } from '../state';
-import { useActions } from '../hooks/use-actions';
-import { useTypedSelector } from '../hooks/use-typed-selector';
+import Preview from '../preview/preview';
+import Resizeable from '../resizeable/resizable';
+import { Cell } from '../../state';
+import { useActions } from '../../hooks/use-actions';
+import { useTypedSelector } from '../../hooks/use-typed-selector';
 import './code-cell.css';
 
 interface CodeCellProps {
@@ -15,28 +16,28 @@ interface CodeCellProps {
 // reminder to install packages with npm install {packageName} --legacy-peer-deps to avoid errors
 const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   const { updateCell, createBundle } = useActions();
+  const cumulativeCode = useCumulativeCode(cell.id);
 
   // use typed selector to get bundles state
   const bundle = useTypedSelector((state) => state.bundles[cell.id]);
 
+  // method to handle running code from other code cells
+
   useEffect(() => {
-    // initial action if no bundle is found
     if (!bundle) {
-      createBundle(cell.id, cell.content);
+      createBundle(cell.id, cumulativeCode);
       return;
     }
 
-    // call create bundle action creator
-    // wrapped in debounce function
     const timer = setTimeout(async () => {
-      createBundle(cell.id, cell.content);
+      createBundle(cell.id, cumulativeCode);
     }, 750);
 
     return () => {
       clearTimeout(timer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cell.content, cell.id, createBundle]);
+  }, [cumulativeCode, cell.id, createBundle]);
 
   return (
     <Resizeable direction='vertical'>
