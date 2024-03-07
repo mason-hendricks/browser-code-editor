@@ -12,6 +12,8 @@ export const serve = (
   // initial setup of express server
   const app = express();
 
+  app.use(createCellsRouter(filename, dir));
+
   // check for proxy param
   if (useProxy) {
     app.use(
@@ -27,8 +29,6 @@ export const serve = (
     const packagePath = require.resolve('local-client/build/index.html');
     app.use(express.static(path.dirname(packagePath)));
   }
-
-  app.use(createCellsRouter(filename, dir));
 
   // custom promise to startup express app
   // manual error catching

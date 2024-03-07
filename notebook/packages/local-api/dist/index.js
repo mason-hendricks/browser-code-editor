@@ -11,6 +11,7 @@ const cells_1 = require("./routes/cells");
 const serve = (port, filename, dir, useProxy) => {
     // initial setup of express server
     const app = (0, express_1.default)();
+    app.use((0, cells_1.createCellsRouter)(filename, dir));
     // check for proxy param
     if (useProxy) {
         app.use((0, http_proxy_middleware_1.createProxyMiddleware)({
@@ -25,7 +26,6 @@ const serve = (port, filename, dir, useProxy) => {
         const packagePath = require.resolve('local-client/build/index.html');
         app.use(express_1.default.static(path_1.default.dirname(packagePath)));
     }
-    app.use((0, cells_1.createCellsRouter)(filename, dir));
     // custom promise to startup express app
     // manual error catching
     return new Promise((resolve, reject) => {
