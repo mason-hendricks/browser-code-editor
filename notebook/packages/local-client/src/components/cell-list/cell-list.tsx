@@ -15,11 +15,13 @@ const CellList: React.FC = () => {
 
   useEffect(() => {
     fetchCells();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     saveCells();
-  }, [JSON.stringify(cells)]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const cellList = cells.map((cell) => {
     return (
