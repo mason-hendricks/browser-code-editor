@@ -3,9 +3,7 @@
 - https://www.udemy.com/course/react-and-typescript-build-a-portfolio-project/
 
 # Startup Scripts
-Copy project directory locally.
+Copy project directory locally using lerna.
+Navigate to `packages` directory and run `lerna bootstrap`
 
-Run `npm install` or `yarn install` to install project dependencies.
-Run project locally with `npm run start` or `yarn start`
-
-Run `npm run serve` or `yarn serve` to startup local Node API
+In that same directory, run `npm run start` or `yarn start` to start all packages simultaneously.
