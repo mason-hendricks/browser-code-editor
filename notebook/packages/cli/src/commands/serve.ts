@@ -9,6 +9,7 @@ interface LocalError {
 // setup commander cli
 // serve command: establishes file structure and port number
 
+const isProduction = process.env.NODE_ENV === 'production';
 export const serveCommand = new Command()
   .command('serve [filename]')
   .description('Open a file for editing')
@@ -21,7 +22,12 @@ export const serveCommand = new Command()
 
     try {
       const dir = path.join(process.cwd(), path.dirname(filename));
-      serve(parseInt(options.port), path.basename(filename), dir);
+      serve(
+        parseInt(options.port),
+        path.basename(filename),
+        dir,
+        !isProduction
+      );
       console.log(
         `Opened ${filename}. Navigate to http://localhost:${options.port} to edit the file.`
       );
