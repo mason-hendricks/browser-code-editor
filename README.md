@@ -5,10 +5,10 @@
 # Setup and Startup Scripts
 Must have lerna installed globally.
 
-Navigate to `notebook/packages/local-client` and either `npm install` or `yarn install` to install dependencies
-Navigate back to `packages` directory and run `lerna bootstrap` to link all project directories
+Navigate to `notebook/packages/local-client` and either `npm install` or `yarn install` to install dependencies.
+Navigate back to `packages` directory and run `lerna bootstrap` to link all project directories.
 
-In that same directory, run `npm run start` or `yarn start` to start all packages simultaneously. 
+Once again in `notebook/packages`, run `npm run start` or `yarn start` to start all packages simultaneously. 
 This will startup a page on `localhost:3000`.
 
 Similarly, you can navigate to `packages/cli/dist` and run `node index.js serve` to startup the cli.
