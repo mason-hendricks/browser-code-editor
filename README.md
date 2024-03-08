@@ -26,6 +26,15 @@ For example:
 
 `show(test)`
 
+OR:
+
+`const App = () => {
+  return <h1>Hello!</h1>
+}
+`
+
+`show(<App />)`
+
 You will then see the result of this executed code in the preview window to the right of the editor.
 
 Each code cell also has function buttons to control their positioning, as well as allowing for deletion.
