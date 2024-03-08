@@ -29,7 +29,9 @@ export const createCellsRouter = (filename: string, dir: string) => {
     try {
       const result = await fs.readFile(fullPath, { encoding: 'utf-8' });
 
-      res.send(JSON.parse(result));
+      if (!!result && result.length > 0) {
+        res.send(JSON.parse(result));
+      }
     } catch (err) {
       if (isLocalApiError(err)) {
         if (err.code === 'ENOENT') {

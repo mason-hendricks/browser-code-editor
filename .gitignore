@@ -2,3 +2,5 @@ notebook/packages/cli/node_modules/
 notebook/packages/local-api/node_modules/
 notebook/packages/local-client/node_modules/
 notebook/packages/local-client/build/
+notebook/packages/cli/dist
+notebook/packages/local-api/dist
