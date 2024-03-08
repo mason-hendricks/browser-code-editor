@@ -4,3 +4,5 @@ notebook/packages/local-client/node_modules/
 notebook/packages/local-client/build/
 notebook/packages/cli/dist/
 notebook/packages/local-api/dist/
+notebook/packages/local-api/dist/routes/
+notebook/packages/local-api/dist/routes/index.js
