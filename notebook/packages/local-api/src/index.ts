@@ -26,7 +26,9 @@ export const serve = (
   } else {
     // else use package path of local-client build dir
     // and pass that to express
-    const packagePath = require.resolve('local-client/build/index.html');
+    const packagePath = require.resolve(
+      '@mh-react-notebook/local-client/build/index.html'
+    );
     app.use(express.static(path.dirname(packagePath)));
   }
 

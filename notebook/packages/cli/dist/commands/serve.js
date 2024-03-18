@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.serveCommand = void 0;
 const path_1 = __importDefault(require("path"));
 const commander_1 = require("commander");
-const local_api_1 = require("local-api");
+const local_api_1 = require("@mh-react-notebook/local-api");
 // setup commander cli
 // serve command: establishes file structure and port number
 const isProduction = process.env.NODE_ENV === 'production';

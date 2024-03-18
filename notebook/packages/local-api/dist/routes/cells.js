@@ -29,7 +29,9 @@ const createCellsRouter = (filename, dir) => {
         // check for error
         try {
             const result = yield promises_1.default.readFile(fullPath, { encoding: 'utf-8' });
-            res.send(JSON.parse(result));
+            if (!!result && result.length > 0) {
+                res.send(JSON.parse(result));
+            }
         }
         catch (err) {
             if (isLocalApiError(err)) {
