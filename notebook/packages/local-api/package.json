@@ -1,12 +1,12 @@
 {
-  "name": "local-api",
+  "name": "@mh-react-notebook/local-api",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.js",
   "scripts": {
     "start": "tsc --watch --preserveWatchOutput",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublishOnly": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -17,9 +17,15 @@
     "typescript": "^5.4.2"
   },
   "dependencies": {
+    "@mh-react-notebook/local-client": "^1.0.0",
     "cors": "^2.8.5",
     "express": "^4.18.3",
-    "http-proxy-middleware": "^2.0.6",
-    "local-client": "^0.1.0"
+    "http-proxy-middleware": "^2.0.6"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
   }
 }

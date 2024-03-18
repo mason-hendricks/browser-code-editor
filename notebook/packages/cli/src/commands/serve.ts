@@ -1,6 +1,6 @@
 import path from 'path';
 import { Command } from 'commander';
-import { serve } from 'local-api';
+import { serve } from '@mh-react-notebook/local-api';
 
 interface LocalError {
   code: string;
