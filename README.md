@@ -1,7 +1,3 @@
-# Practice Project
-- This was created through learning and practice via a Udemy.com course by Stephen Grider
-- https://www.udemy.com/course/react-and-typescript-build-a-portfolio-project/
-
 # Setup and Startup Scripts
 In a terminal, run `npx mh-react-notebook` which will reach out to my npm organization and download the necessary packages needed to run this app.
 
